@@ -1,12 +1,14 @@
 import sys
 import pygame
-from pygame.locals import *
+import gameFunctions as gf
+import time
 from settings import Settings
 from ships import Ship
 
 def run_game():
     # 初始pygame、设置初始值、获取屏幕对象
     pygame.init()
+
     ai_settings = Settings()
     screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
 
@@ -14,11 +16,9 @@ def run_game():
 
     ship = Ship(screen)
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
+        gf.checkEvent(ship)
+        ship.update()
+        gf.updateScreen(ai_settings,screen, ship)
+        time.sleep(0.01)
 
-        screen.fill(ai_settings.screen_bgColor)
-        ship.bliteme()
-        pygame.display.flip()
 run_game()
